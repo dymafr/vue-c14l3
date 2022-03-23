@@ -18,6 +18,7 @@
 }
 
 // reset
+
 * {
   box-sizing: border-box;
 }
@@ -120,16 +121,12 @@ label {
 
 // margin
 
-.m-10 {
-  margin: 10px;
-}
-
 .mb-5 {
   margin-bottom: 5px;
 }
 
-.mb-10 {
-  margin-bottom: 10px;
+.m-10 {
+  margin: 10px;
 }
 
 .mr-10 {
@@ -140,8 +137,16 @@ label {
   margin-right: 20px;
 }
 
+.mb-10 {
+  margin-bottom: 10px;
+}
+
 .m-20 {
   margin: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
 }
 
 .m-30 {
@@ -182,6 +187,8 @@ label {
     background-color: var(--success-2);
   }
 }
+
+// card
 
 .card {
   border: var(--border);
