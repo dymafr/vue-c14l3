@@ -2,11 +2,6 @@
 import { useForm, useField } from 'vee-validate';
 import { z } from 'zod';
 import { toFormValidator } from '@vee-validate/zod';
-// import { onMounted, ref } from 'vue';
-// const firstInput = ref<HTMLInputElement | null>(null);
-// onMounted(() => {
-//   firstInput.value?.focus();
-// });
 
 const required = { required_error: 'Veuillez renseigner ce champ' };
 const validationSchema = toFormValidator(
@@ -37,20 +32,8 @@ const price = useField('price');
 const description = useField('description');
 const category = useField('category');
 
-const trySubmit = handleSubmit(async (formValues, { resetForm }) => {
-  try {
-    await fetch('https://restapi.fr/api/projetproducts', {
-      method: 'POST',
-      body: JSON.stringify(formValues),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    resetForm();
-    firstInput.value?.focus();
-  } catch (e) {
-    console.log(e);
-  }
+const trySubmit = handleSubmit((formValues) => {
+  console.log(formValues);
 });
 </script>
 
@@ -89,7 +72,7 @@ const trySubmit = handleSubmit(async (formValues, { resetForm }) => {
       <div class="d-flex flex-column mb-20">
         <label class="mb-5">*Catégorie</label>
         <select v-model="category.value.value">
-          <option value>Choisissez une catégorie</option>
+          <option value disabled>Choisissez une catégorie</option>
           <option value="gamer">Jeu</option>
           <option value="desktop">Bureautique</option>
           <option value="streaming">Stream</option>
