@@ -13,7 +13,7 @@ const validationSchema = toFormValidator(
     image: z.string(required),
     price: z
       .number(required)
-      .min(0, { message: 'Le prix doit être superieur à 0€' })
+      .min(0, { message: 'Le prix doit être supérieur à 0€' })
       .max(15000, { message: 'Le prix doit être inferieur à 150 00€' }),
     description: z
       .string(required)
