@@ -26,11 +26,82 @@ const validationSchema = toFormValidator(
     category: z.string(required),
   })
 );
+
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema,
+});
+
+const title = useField('title');
+const image = useField('image');
+const price = useField('price');
+const description = useField('description');
+const category = useField('category');
+
+const trySubmit = handleSubmit(async (formValues, { resetForm }) => {
+  try {
+    await fetch('https://restapi.fr/api/projetproducts', {
+      method: 'POST',
+      body: JSON.stringify(formValues),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    resetForm();
+    firstInput.value?.focus();
+  } catch (e) {
+    console.log(e);
+  }
+});
 </script>
 
 <template>
   <div class="card">
-    <h1>Formulaire</h1>
+    <h3 class="mb-10">Ajouter un article</h3>
+    <form @submit="trySubmit">
+      <div class="d-flex flex-column mb-20">
+        <label class="mb-5">*Titre</label>
+        <input ref="firstInput" v-model="title.value.value" type="text" />
+        <small class="form-error" v-if="title.errorMessage.value">{{
+          title.errorMessage.value
+        }}</small>
+      </div>
+      <div class="d-flex flex-column mb-20">
+        <label class="mb-5">*Image</label>
+        <input v-model="image.value.value" type="text" />
+        <small class="form-error" v-if="image.errorMessage.value">{{
+          image.errorMessage.value
+        }}</small>
+      </div>
+      <div class="d-flex flex-column mb-20">
+        <label class="mb-5">*Prix</label>
+        <input v-model="price.value.value" type="number" />
+        <small class="form-error" v-if="price.errorMessage.value">{{
+          price.errorMessage.value
+        }}</small>
+      </div>
+      <div class="d-flex flex-column mb-20">
+        <label class="mb-5">*Description</label>
+        <textarea v-model="(description.value.value as string)"></textarea>
+        <small class="form-error" v-if="description.errorMessage.value">{{
+          description.errorMessage.value
+        }}</small>
+      </div>
+      <div class="d-flex flex-column mb-20">
+        <label class="mb-5">*Catégorie</label>
+        <select v-model="category.value.value">
+          <option value>Choisissez une catégorie</option>
+          <option value="gamer">Jeu</option>
+          <option value="desktop">Bureautique</option>
+          <option value="streaming">Stream</option>
+        </select>
+        <small class="form-error" v-if="category.errorMessage.value">{{
+          category.errorMessage.value
+        }}</small>
+      </div>
+      <button class="btn btn-primary" :disabled="isSubmitting">
+        Sauvegarder
+      </button>
+    </form>
   </div>
 </template>
 
